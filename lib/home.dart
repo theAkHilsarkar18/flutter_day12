@@ -8,25 +8,47 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TextEditingController txtDate =
-  TextEditingController(text: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+  TextEditingController txtDate = TextEditingController(
+      text:
+          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
 
+  TextEditingController cuDate =
+      TextEditingController(text: "${DateTime.now().day}");
+  TextEditingController cuMonth =
+      TextEditingController(text: "${DateTime.now().month}");
+  TextEditingController cuYear =
+      TextEditingController(text: "${DateTime.now().year}");
 
-  TextEditingController cuDate = TextEditingController();
-  TextEditingController cuMonth = TextEditingController();
-  TextEditingController cuYear = TextEditingController();
+  // to find age
+  TextEditingController bDate = TextEditingController();
+  TextEditingController bMonth = TextEditingController();
+  TextEditingController bYear = TextEditingController();
 
   String cDate = "0";
   String cMonth = "0";
   String cYear = "0";
 
+  String bDate2 = "0";
+  String bMonth2 = "0";
+  String bYear2 = "0";
+
   int d = 0;
   int m = 0;
   int y = 0;
 
-  int date = 00;
-  int month = 00;
-  int year = 0000;
+  int date = 0;
+  int month = 0;
+  int year = 0;
+
+  int resultDate = 0;
+  int resultMonth = 0;
+  int resultYear = 0;
+
+  // to find next birthday
+
+  int nextDate = 0;
+  int nextMonth = 0;
+  int nextYear = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +88,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          controller: cuYear,
+                          controller: cuDate,
                           decoration: InputDecoration(
                             hintText: "DD",
                             border: OutlineInputBorder(
@@ -122,7 +144,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          controller: cuDate,
+                          controller: cuYear,
                           decoration: InputDecoration(
                             hintText: "YYYY",
                             border: OutlineInputBorder(
@@ -143,7 +165,6 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-
 
                 // TextField(
                 //   controller: txtDate,
@@ -172,7 +193,6 @@ class _HomeState extends State<Home> {
                   height: 5,
                 ),
 
-
                 Row(
                   children: [
                     Expanded(
@@ -184,7 +204,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          controller: cuYear,
+                          controller: bDate,
                           decoration: InputDecoration(
                             hintText: "DD",
                             border: OutlineInputBorder(
@@ -212,7 +232,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          controller: cuMonth,
+                          controller: bMonth,
                           decoration: InputDecoration(
                             hintText: "MM",
                             border: OutlineInputBorder(
@@ -240,7 +260,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          controller: cuDate,
+                          controller: bYear,
                           decoration: InputDecoration(
                             hintText: "YYYY",
                             border: OutlineInputBorder(
@@ -262,20 +282,22 @@ class _HomeState extends State<Home> {
                   ],
                 ),
 
-
                 SizedBox(
                   height: 30,
                 ),
+
                 Row(
                   children: [
                     Expanded(
                       child: Container(
                         alignment: Alignment.center,
-                        child: Text("Clear",
-                            style: TextStyle(
-                                color: Color(0xFF203A43),
-                                fontSize: 20,
-                                letterSpacing: 2),),
+                        child: Text(
+                          "Clear",
+                          style: TextStyle(
+                              color: Color(0xFF203A43),
+                              fontSize: 20,
+                              letterSpacing: 2),
+                        ),
                         height: 50,
                         width: 120,
                         decoration: BoxDecoration(
@@ -290,22 +312,76 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: 10,
                     ),
+
+                    // calculate button
+
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          setState(() {
-                            cDate = cuDate.text;
-                            cMonth = cuMonth.text;
-                            cYear = cuYear.text;
+                          setState(
+                            () {
+                              cDate = cuDate.text;
+                              cMonth = cuMonth.text;
+                              cYear = cuYear.text;
 
-                            d = int.parse(cDate);
-                            m = int.parse(cMonth);
-                            y = int.parse(cYear);
+                              d = int.parse(cDate);
+                              m = int.parse(cMonth);
+                              y = int.parse(cYear);
 
-                            year = y;
-                            month = m;
-                            date = d;
-                          });
+                              // birthday date , month , year
+                              bDate2 = bDate.text;
+                              bMonth2 = bMonth.text;
+                              bYear2 = bYear.text;
+
+                              date = int.parse(bDate2);
+                              month = int.parse(bMonth2);
+                              year = int.parse(bYear2);
+
+                              // for present age
+
+                              if (d >= date) {
+                                resultDate = d - date;
+                              } else {
+                                resultDate = date - d;
+                              }
+
+                              if (m >= month) {
+                                resultMonth = m - month;
+                              } else {
+                                resultMonth = month - m;
+                              }
+
+                              if (y >= year) {
+                                resultYear = y - year;
+                              } else {
+                                resultYear = year - y;
+                              }
+
+                              // for next birthday
+
+                              if (d >= date) {
+                                nextDate = d - date;
+                              } else {
+                                nextDate = date - d;
+                              }
+
+                              if (m >= month) {
+                                nextMonth = m - month;
+                              } else {
+                                nextMonth = month - m + month;
+                              }
+
+                              if (y >= year) {
+                                nextYear = y - year;
+                              } else {
+                                nextYear = year - y;
+                              }
+
+
+
+
+                            },
+                          );
                         },
                         child: Container(
                           child: Text("Calculate",
@@ -345,58 +421,149 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 10,
                 ),
+
+                // present age container
                 Container(
                   height: 100,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(colors: [
-                      Color(0xFF13547A),
-                      Color(0xFF203A43),
-                    ]),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF13547A),
+                        Color(0xFF203A43),
+                      ],
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      //container 1
                       Container(
+                        padding: EdgeInsets.all(13),
                         alignment: Alignment.center,
-                        height: 50,
-                        width: 50,
+                        height: 100,
+                        width: 100,
                         decoration: BoxDecoration(
                             // border: Border.all(color: Colors.white),
                             ),
-                        child: Text(
-                          "  $year\nYear",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 50,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "$resultYear",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                            Container(
+                              height: 35,
+                              width: 100,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "YYYY",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+
+                      //container 2
                       Container(
                         alignment: Alignment.center,
-                        height: 60,
-                        width: 60,
+                        padding: EdgeInsets.all(13),
+                        height: 100,
+                        width: 100,
                         decoration: BoxDecoration(
                             //border: Border.all(color: Colors.white),
                             ),
-                        child: Text(
-                          "  $month\nMM",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 50,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "$resultMonth",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                            Container(
+                              height: 35,
+                              width: 100,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "MM",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+
+                      //container 3
                       Container(
                         alignment: Alignment.center,
-                        height: 50,
-                        width: 50,
+                        padding: EdgeInsets.all(13),
+                        height: 100,
+                        width: 100,
                         decoration: BoxDecoration(
                             //border: Border.all(color: Colors.white),
                             ),
-                        child: Text(
-                          " $date\nDD",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 50,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "$resultDate",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                            Container(
+                              height: 35,
+                              width: 100,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "DD",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
+
                 SizedBox(
                   height: 20,
                 ),
@@ -410,6 +577,8 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 10,
                 ),
+
+                // next birthday ui
                 Container(
                   height: 100,
                   width: double.infinity,
@@ -425,36 +594,87 @@ class _HomeState extends State<Home> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-
                       Container(
+                        padding: EdgeInsets.all(13),
                         alignment: Alignment.center,
-                        height: 60,
-                        width: 60,
+                        height: 100,
+                        width: 100,
                         decoration: BoxDecoration(
-                            //border: Border.all(color: Colors.white),
+                            // border: Border.all(color: Colors.white),
                             ),
-                        child: Text(
-                          "  $month\nMM",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 50,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "$nextMonth",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                            Container(
+                              height: 35,
+                              width: 100,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "MM",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.all(13),
                         alignment: Alignment.center,
-                        height: 50,
-                        width: 50,
+                        height: 100,
+                        width: 100,
                         decoration: BoxDecoration(
-                            //border: Border.all(color: Colors.white),
+                            // border: Border.all(color: Colors.white),
                             ),
-                        child: Text(
-                          " $date\nDD",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 50,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "$nextDate",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                            Container(
+                              height: 35,
+                              width: 100,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  // color: Colors.black12
+                                  ),
+                              child: Text(
+                                "DD",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-
-
               ],
             ),
           ),
