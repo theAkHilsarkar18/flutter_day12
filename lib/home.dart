@@ -9,10 +9,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   TextEditingController txtDate =
-      TextEditingController(text: "${DateTime.now()}");
+  TextEditingController(text: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+
+
   TextEditingController cuDate = TextEditingController();
   TextEditingController cuMonth = TextEditingController();
   TextEditingController cuYear = TextEditingController();
+
+  String cDate = "0";
+  String cMonth = "0";
+  String cYear = "0";
+
+  int d = 0;
+  int m = 0;
+  int y = 0;
+
   int date = 00;
   int month = 00;
   int year = 0000;
@@ -43,32 +54,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 SizedBox(height: 5),
-                TextField(
-                  controller: txtDate,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(
-                          color: Color(0xFF203A43),
-                          style: BorderStyle.solid,
-                          width: 2),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Date of Birth",
-                  style: TextStyle(
-                    letterSpacing: 2,
-                    color: Color(0xFF203A43),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
+
                 Row(
                   children: [
                     Expanded(
@@ -157,6 +143,126 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
+
+
+                // TextField(
+                //   controller: txtDate,
+                //   decoration: InputDecoration(
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     focusedBorder: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(15),
+                //       borderSide: BorderSide(
+                //           color: Color(0xFF203A43),
+                //           style: BorderStyle.solid,
+                //           width: 2),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(height: 10),
+                Text(
+                  "Date of Birth",
+                  style: TextStyle(
+                    letterSpacing: 2,
+                    color: Color(0xFF203A43),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: TextField(
+                          controller: cuYear,
+                          decoration: InputDecoration(
+                            hintText: "DD",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color(0xFF203A43),
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: TextField(
+                          controller: cuMonth,
+                          decoration: InputDecoration(
+                            hintText: "MM",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color(0xFF203A43),
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: TextField(
+                          controller: cuDate,
+                          decoration: InputDecoration(
+                            hintText: "YYYY",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color(0xFF203A43),
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+
+
                 SizedBox(
                   height: 30,
                 ),
@@ -169,7 +275,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 color: Color(0xFF203A43),
                                 fontSize: 20,
-                                letterSpacing: 2)),
+                                letterSpacing: 2),),
                         height: 50,
                         width: 120,
                         decoration: BoxDecoration(
@@ -185,22 +291,39 @@ class _HomeState extends State<Home> {
                       width: 10,
                     ),
                     Expanded(
-                      child: Container(
-                        child: Text("Calculate",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                letterSpacing: 2)),
-                        alignment: Alignment.center,
-                        height: 50,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(colors: [
-                            Color(0xFF203A43),
-                            Colors.teal.shade700,
-                            //Color(0xFF203A43),
-                          ]),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            cDate = cuDate.text;
+                            cMonth = cuMonth.text;
+                            cYear = cuYear.text;
+
+                            d = int.parse(cDate);
+                            m = int.parse(cMonth);
+                            y = int.parse(cYear);
+
+                            year = y;
+                            month = m;
+                            date = d;
+                          });
+                        },
+                        child: Container(
+                          child: Text("Calculate",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  letterSpacing: 2)),
+                          alignment: Alignment.center,
+                          height: 50,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(colors: [
+                              Color(0xFF203A43),
+                              Colors.teal.shade700,
+                              //Color(0xFF203A43),
+                            ]),
+                          ),
                         ),
                       ),
                     ),
@@ -330,6 +453,8 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 ),
+
+
               ],
             ),
           ),
