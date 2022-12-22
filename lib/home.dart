@@ -346,7 +346,8 @@ class _HomeState extends State<Home> {
                               }
 
                               if (m >= month) {
-                                resultMonth = m - month;
+                                int x = m - month;
+                                resultMonth = 12 - x;
                               } else {
                                 resultMonth = month - m;
                               }
@@ -366,9 +367,10 @@ class _HomeState extends State<Home> {
                               }
 
                               if (m >= month) {
-                                nextMonth = m - month;
+                                m = 12 - m;
+                                nextMonth = m + month;
                               } else {
-                                nextMonth = month - m + month;
+                                nextMonth = month - m;
                               }
 
                               if (y >= year) {
